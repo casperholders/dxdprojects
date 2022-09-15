@@ -38,7 +38,7 @@
                     v-for="status in statuses"
                     @click="page=1; fetchProjects()"
                   >
-                    {{ status.status }}
+                    {{ status.status }} ({{status.count}})
                   </v-chip>
                 </v-chip-group>
               </v-card-text>
@@ -69,7 +69,7 @@
                     v-for="tag in tags"
                     @click="filterTags(tag.tag)"
                   >
-                    {{ tag.tag }}
+                    {{ tag.tag }} ({{tag.count}})
                   </v-chip>
                 </v-chip-group>
               </v-card-text>
@@ -231,10 +231,10 @@
         this.projects = await response.json();
       },
       async fetchTags() {
-        this.tags = await (await fetch(`${import.meta.env.VITE_POSTGREST}/tags`)).json();
+        this.tags = await (await fetch(`${import.meta.env.VITE_POSTGREST}/tags_stats`)).json();
       },
       async fetchStatuses() {
-        this.statuses = await (await fetch(`${import.meta.env.VITE_POSTGREST}/statuses`)).json();
+        this.statuses = await (await fetch(`${import.meta.env.VITE_POSTGREST}/statuses_stats`)).json();
       },
       parseContentRange(contentRange) {
         if (contentRange === '*/0') {
