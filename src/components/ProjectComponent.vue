@@ -99,30 +99,36 @@
           <h2 class="my-3">Grant budget</h2>
           <pre>{{ formatBudget(project.total_grant) }}</pre>
           <h2 class="my-3">Icon Legend</h2>
-          <v-icon
-            size="large"
-            left
-            class="mr-3"
-            icon="mdi-information"
-            color="info"
-          ></v-icon>
-          No vote on the milestone yet.
-          <v-icon
-            size="large"
-            left
-            class="mr-3"
-            icon="mdi-check-circle"
-            color="lime"
-          ></v-icon>
-          Informal vote done.
-          <v-icon
-            size="large"
-            left
-            class="mr-3"
-            icon="mdi-check-circle"
-            color="success"
-          ></v-icon>
-          Formal vote done.
+          <div>
+            <v-icon
+              size="large"
+              left
+              class="mr-3"
+              icon="mdi-information"
+              color="info"
+            ></v-icon>
+            No vote on the milestone yet.
+          </div>
+          <div>
+            <v-icon
+              size="large"
+              left
+              class="mr-3"
+              icon="mdi-check-circle"
+              color="lime"
+            ></v-icon>
+            Informal vote done.
+          </div>
+          <div>
+            <v-icon
+              size="large"
+              left
+              class="mr-3"
+              icon="mdi-check-circle"
+              color="success"
+            ></v-icon>
+            Formal vote done.
+          </div>
           <v-expansion-panels class="my-3">
             <v-expansion-panel
               v-for="milestone in project.milestones"
@@ -213,5 +219,6 @@
         white-space: -pre-wrap; /* Opera 4-6 */
         white-space: -o-pre-wrap; /* Opera 7 */
         word-wrap: break-word; /* Internet Explorer 5.5+ */
+        word-break: break-word;
     }
 </style>
