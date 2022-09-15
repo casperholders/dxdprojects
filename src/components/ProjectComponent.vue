@@ -1,73 +1,71 @@
 <template>
-  <v-dialog v-model="dialog">
-    <template v-slot:activator="{props}">
-      <v-card>
-        <v-card-title>{{ sanitize(project.title) }}</v-card-title>
-        <v-card-subtitle>{{ sanitize(project.short_description) }}</v-card-subtitle>
-        <v-container class="d-flex overflow-x-auto justify-center">
-          <v-chip
-            v-for="tag in project.tags"
-            class="mr-2 mt-2"
-          >{{ sanitize(tag) }}
-          </v-chip>
-          <v-chip
-            v-if="!project.tags"
-            class="mr-2 mt-2"
-          >None
-          </v-chip>
-        </v-container>
-        <v-card-text>
-          <v-card
-            class="mx-auto my-4"
-            width="350"
-            variant="tonal"
-            density="compact"
-          >
-            <template v-slot:title>
-              Grant status : {{ sanitize(project.status) }}
-            </template>
-          </v-card>
-          <v-card
-            class="mx-auto my-4"
-            width="350"
-            variant="tonal"
-            density="compact"
-          >
-            <template v-slot:title>
-              Milestones statuses
-              <div>
-                <v-icon
-                  v-for="milestone in formatMilestones(project.milestones)"
-                  size="large"
-                  left
-                  :icon="milestone.icon"
-                  :color="milestone.color"
-                ></v-icon>
-              </div>
-            </template>
-          </v-card>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            variant="outlined"
-            v-bind="props"
-          >
-            Learn more
-          </v-btn>
-          <v-spacer />
-        </v-card-actions>
-      </v-card>
-    </template>
-    <v-container
-      max-width="75%"
-      class="overflow-auto"
+  <div>
+    <v-dialog
+      v-model="dialog"
+      class="ma-5"
     >
-      <v-card class="overflow-auto">
-        <v-card-title class="text-center">
+      <template v-slot:activator="{props}">
+        <v-card>
+          <v-card-title>{{ sanitize(project.id) }} - {{ sanitize(project.title) }}</v-card-title>
+          <v-card-subtitle>{{ sanitize(project.short_description) }}</v-card-subtitle>
+          <v-container class="d-flex overflow-x-auto justify-center">
+            <v-chip
+              v-for="tag in project.tags"
+              class="mr-2 mt-2"
+            >{{ sanitize(tag) }}
+            </v-chip>
+            <v-chip
+              v-if="!project.tags"
+              class="mr-2 mt-2"
+            >None
+            </v-chip>
+          </v-container>
+          <v-card-text>
+            <v-card
+              class="mx-auto my-4"
+              variant="tonal"
+              density="compact"
+            >
+              <template v-slot:title>
+                Grant status : {{ sanitize(project.status) }}
+              </template>
+            </v-card>
+            <v-card
+              class="mx-auto my-4"
+              variant="tonal"
+              density="compact"
+            >
+              <template v-slot:title>
+                Milestones statuses
+                <div>
+                  <v-icon
+                    v-for="milestone in formatMilestones(project.milestones)"
+                    size="large"
+                    left
+                    :icon="milestone.icon"
+                    :color="milestone.color"
+                  ></v-icon>
+                </div>
+              </template>
+            </v-card>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              variant="outlined"
+              v-bind="props"
+            >
+              Learn more
+            </v-btn>
+            <v-spacer />
+          </v-card-actions>
+        </v-card>
+      </template>
+      <v-card>
+        <v-card-title class="text-center text-wrap">
           {{ sanitize(project.title) }}
         </v-card-title>
-        <v-card-text class="text-wrap">
+        <v-card-text class="">
           <h2 class="my-3">Status</h2>
           <pre>{{ sanitize(project.status) }}</pre>
           <template v-if="project.linkedin">
@@ -92,11 +90,11 @@
           <pre>{{ sanitize(project.status) }}</pre>
           <h2 class="my-3">Description</h2>
           <pre>{{ sanitize(project.short_description) }}</pre>
-          <h2 class="my-3">What problem this grant would solve ?</h2>
+          <h2 class="my-3 text-wrap">What problem this grant would solve ?</h2>
           <pre>{{ project.explanation_solve !== '' ? sanitize(project.explanation_solve) : 'N/A' }}</pre>
-          <h2 class="my-3">What benefits this grant would add to the ecosytem ?</h2>
+          <h2 class="my-3 text-wrap">What benefits this grant would add to the ecosytem ?</h2>
           <pre>{{ project.explanation_benefit !== '' ? sanitize(project.explanation_benefit) : 'N/A' }}</pre>
-          <h2 class="my-3">What's the goal of the grant ?</h2>
+          <h2 class="my-3 text-wrap">What's the goal of the grant ?</h2>
           <pre>{{ project.explanation_goal !== '' ? sanitize(project.explanation_goal) : 'N/A' }}</pre>
           <h2 class="my-3">Grant budget</h2>
           <pre>{{ formatBudget(project.total_grant) }}</pre>
@@ -158,8 +156,8 @@
           </v-expansion-panels>
         </v-card-text>
       </v-card>
-    </v-container>
-  </v-dialog>
+    </v-dialog>
+  </div>
 </template>
 
 <script>

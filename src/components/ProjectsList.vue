@@ -2,120 +2,122 @@
   <v-container>
     <v-row class="text-center justify-space-around">
       <v-col
-        md="12"
+        cols="12"
         class="align-self-center"
       >
-        <v-card
-          width="800"
-          class="ma-auto justify-center"
-        >
-          <v-card-title>Quick Filters</v-card-title>
-          <v-card-subtitle>Filter grants based on statuses and/or tags</v-card-subtitle>
-          <v-card-text>
+        <v-row class="align-center justify-center">
+          <v-col cols="12" lg="6">
             <v-card
-              class="mx-auto my-4"
-              variant="tonal"
-              density="compact"
             >
-              <template v-slot:title>
-                Filter on grant status
-              </template>
+              <v-card-title>Quick Filters</v-card-title>
+              <v-card-subtitle>Filter grants based on statuses and/or tags</v-card-subtitle>
               <v-card-text>
-                <v-progress-circular
-                  v-if="statuses.length === 0"
-                  indeterminate
-                  color="primary"
-                ></v-progress-circular>
-                <v-chip-group
-                  v-if="statuses.length !== 0"
-                  v-model="selectedStatuses"
-                  class="justify-center"
-                  column
-                  multiple
+                <v-card
+                  class="mx-auto my-4"
+                  variant="tonal"
+                  density="compact"
                 >
-                  <v-chip
-                    filter
-                    v-for="status in statuses"
-                    @click="page=1; fetchProjects()"
-                  >
-                    {{ status.status }} ({{status.count}})
-                  </v-chip>
-                </v-chip-group>
-              </v-card-text>
-            </v-card>
-            <v-card
-              class="mx-auto my-4"
-              variant="tonal"
-              density="compact"
-            >
-              <template v-slot:title>
-                Filter on tags
-              </template>
-              <v-card-text>
-                <v-progress-circular
-                  v-if="tags.length === 0"
-                  indeterminate
-                  color="primary"
-                ></v-progress-circular>
-                <v-chip-group
-                  v-if="tags.length !== 0"
-                  v-model="selectedTags"
-                  column
-                  multiple
-                  class="justify-center"
+                  <template v-slot:title>
+                    Filter on grant status
+                  </template>
+                  <v-card-text>
+                    <v-progress-circular
+                      v-if="statuses.length === 0"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
+                    <v-chip-group
+                      v-if="statuses.length !== 0"
+                      v-model="selectedStatuses"
+                      class="justify-center"
+                      column
+                      multiple
+                    >
+                      <v-chip
+                        filter
+                        v-for="status in statuses"
+                        @click="page=1; fetchProjects()"
+                      >
+                        {{ status.status }} ({{status.count}})
+                      </v-chip>
+                    </v-chip-group>
+                  </v-card-text>
+                </v-card>
+                <v-card
+                  class="mx-auto my-4"
+                  variant="tonal"
+                  density="compact"
                 >
-                  <v-chip
-                    filter
-                    v-for="tag in tags"
-                    @click="filterTags(tag.tag)"
-                  >
-                    {{ tag.tag }} ({{tag.count}})
-                  </v-chip>
-                </v-chip-group>
+                  <template v-slot:title>
+                    Filter on tags
+                  </template>
+                  <v-card-text>
+                    <v-progress-circular
+                      v-if="tags.length === 0"
+                      indeterminate
+                      color="primary"
+                    ></v-progress-circular>
+                    <v-chip-group
+                      v-if="tags.length !== 0"
+                      v-model="selectedTags"
+                      column
+                      multiple
+                      class="justify-center"
+                    >
+                      <v-chip
+                        filter
+                        v-for="tag in tags"
+                        @click="filterTags(tag.tag)"
+                      >
+                        {{ tag.tag }} ({{tag.count}})
+                      </v-chip>
+                    </v-chip-group>
+                  </v-card-text>
+                </v-card>
+                <v-card
+                  class="mx-auto my-4"
+                  variant="tonal"
+                  density="compact"
+                >
+                  <template v-slot:title>
+                    Filter on text in title and/or description
+                  </template>
+                  <v-card-text>
+                    <v-form ref="form" lazy-validation>
+                      <v-text-field
+                        label="Search"
+                        v-model="search"
+                        :rules="[rules.noSpecialChars]"
+                      />
+                    </v-form>
+                  </v-card-text>
+                </v-card>
+                <h2 class="my-3">Icon Legend</h2>
+                <v-icon
+                  size="large"
+                  left
+                  icon="mdi-information"
+                  color="info"
+                ></v-icon>
+                No vote on the milestone yet.
+                <v-icon
+                  size="large"
+                  left
+                  icon="mdi-check-circle"
+                  color="lime"
+                ></v-icon>
+                Informal vote done.
+                <v-icon
+                  size="large"
+                  left
+                  icon="mdi-check-circle"
+                  color="success"
+                ></v-icon>
+                Formal vote done.
               </v-card-text>
             </v-card>
-            <v-card
-              class="mx-auto my-4"
-              variant="tonal"
-              density="compact"
-            >
-              <template v-slot:title>
-                Filter on text in title and/or description
-              </template>
-              <v-card-text>
-                <v-form ref="form" lazy-validation>
-                  <v-text-field
-                    label="Search"
-                    v-model="search"
-                    :rules="[rules.noSpecialChars]"
-                  />
-                </v-form>
-              </v-card-text>
-            </v-card>
-            <h2 class="my-3">Icon Legend</h2>
-            <v-icon
-              size="large"
-              left
-              icon="mdi-information"
-              color="info"
-            ></v-icon>
-            No vote on the milestone yet.
-            <v-icon
-              size="large"
-              left
-              icon="mdi-check-circle"
-              color="lime"
-            ></v-icon>
-            Informal vote done.
-            <v-icon
-              size="large"
-              left
-              icon="mdi-check-circle"
-              color="success"
-            ></v-icon>
-            Formal vote done.
-          </v-card-text>
-        </v-card>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col
         md="3"
@@ -206,7 +208,6 @@
             filterTags = `&tags=cs.{${selectedTags.join(',')}}`;
           }
         }
-        console.log(filterTags);
         const selectedStatuses = [];
         this.selectedStatuses.forEach((i) => selectedStatuses.push(this.statuses[i].status));
         let filterStatuses = '';
@@ -217,7 +218,11 @@
         if (this.search !== '') {
           this.$refs.form.validate();
           const trimSearch = encodeURI(this.search.trim());
-          sqlSearch = `&or=(title.ilike.*${trimSearch}*,short_description.ilike.*${trimSearch}*)`;
+          let idSearch = '';
+          if (parseInt(trimSearch)) {
+            idSearch = `,id.eq.${trimSearch}`
+          }
+          sqlSearch = `&or=(title.ilike.*${trimSearch}*,short_description.ilike.*${trimSearch}*${idSearch})`;
         }
         const offset = (this.page - 1) * 12;
         const response = await fetch(`${import.meta.env.VITE_POSTGREST}/projects?limit=12${filterTags}${filterStatuses}${sqlSearch}&offset=${offset}`, {
