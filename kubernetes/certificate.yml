@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dxdprojects-cert
+spec:
+  secretName: dxdprojects-cert
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: dxd.casper.dev
+  dnsNames:
+    - dxd.casper.dev

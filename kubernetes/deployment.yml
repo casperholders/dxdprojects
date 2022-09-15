@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dxdprojects-app
+  name: dxdprojects-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dxdprojects-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: dxdprojects-app
+        name: dxdprojects-app
+    spec:
+      containers:
+        - name: dxdprojects-app
+          image: killianh/dxdprojects:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources: { }
+      restartPolicy: Always

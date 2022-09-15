@@ -220,7 +220,7 @@
           sqlSearch = `&or=(title.ilike.*${trimSearch}*,short_description.ilike.*${trimSearch}*)`;
         }
         const offset = (this.page - 1) * 12;
-        const response = await fetch(`http://localhost:3000/projects?limit=12${filterTags}${filterStatuses}${sqlSearch}&offset=${offset}`, {
+        const response = await fetch(`${import.meta.env.VITE_POSTGREST}/projects?limit=12${filterTags}${filterStatuses}${sqlSearch}&offset=${offset}`, {
           method: 'GET',
           headers: new Headers({
             'Range-Unit': 'items',
@@ -231,10 +231,10 @@
         this.projects = await response.json();
       },
       async fetchTags() {
-        this.tags = await (await fetch('http://localhost:3000/tags')).json();
+        this.tags = await (await fetch(`${import.meta.env.VITE_POSTGREST}/tags`)).json();
       },
       async fetchStatuses() {
-        this.statuses = await (await fetch('http://localhost:3000/statuses')).json();
+        this.statuses = await (await fetch(`${import.meta.env.VITE_POSTGREST}/statuses`)).json();
       },
       parseContentRange(contentRange) {
         if (contentRange === '*/0') {

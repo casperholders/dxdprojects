@@ -1,0 +1,32 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dxdprojects-tls
+spec:
+  entryPoints:
+    - secure
+  routes:
+    - match: Host(`dxd.casper.dev`)
+      kind: Rule
+      services:
+        - name: dxdprojects-service
+          port: 80
+  tls:
+    secretName: dxdprojects-cert
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dxdprojects-http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`dxd.casper.dev`)
+      middlewares:
+        - name: https-only
+      kind: Rule
+      services:
+        - name: dxdprojects-service
+          port: 80
